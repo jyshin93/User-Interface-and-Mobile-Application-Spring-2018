@@ -2,9 +2,14 @@ package com.example.jinshin.watertracker;
 
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -13,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,6 +27,9 @@ import java.util.Date;
 import me.itangqi.waveloadingview.WaveLoadingView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
 
     Animation alpha;
     public static final String PREFS_NAME = "MyPrefsFile";
@@ -43,10 +52,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     WaveLoadingView wave;
 
+    android.support.v7.widget.Toolbar action_bar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        action_bar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(action_bar);
+
+        //initialize drawer here
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         settings = getSharedPreferences(PREFS_NAME, 0);
 
@@ -84,6 +105,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         input_text = (EditText) findViewById(R.id.input_text);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater setting = getMenuInflater();
+        setting.inflate(R.menu.app_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (mToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

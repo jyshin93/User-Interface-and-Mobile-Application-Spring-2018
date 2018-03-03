@@ -28,4 +28,5 @@ dependencies {
 
     //add waving view library
     compile 'me.itangqi.waveloadingview:library:0.3.5'
+    implementation 'com.android.support:design:26.1.0'
 }
