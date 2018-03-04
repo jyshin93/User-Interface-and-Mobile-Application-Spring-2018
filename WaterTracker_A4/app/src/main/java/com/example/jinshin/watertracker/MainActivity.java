@@ -1,14 +1,15 @@
 package com.example.jinshin.watertracker;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -18,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,7 +26,7 @@ import java.util.Date;
 
 import me.itangqi.waveloadingview.WaveLoadingView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
@@ -63,11 +63,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setSupportActionBar(action_bar);
 
         //initialize drawer here
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, action_bar, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         settings = getSharedPreferences(PREFS_NAME, 0);
 
@@ -108,19 +110,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater setting = getMenuInflater();
-        setting.inflate(R.menu.app_bar_menu, menu);
+        getMenuInflater().inflate(R.menu.app_bar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mToggle.onOptionsItemSelected(item)) {
+//        if (mToggle.onOptionsItemSelected(item)) {
+//            return true;
+//        }
+        int id = item.getItemId();
+
+        if (id == R.id.settings) {
+            return true;
+        } else if (mToggle.onOptionsItemSelected(item)) {
+            toast.makeText(MainActivity.this, "select hambuger!!!", toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        toast.makeText(MainActivity.this, "selected nav menu!!!", toast.LENGTH_SHORT).show();
+        int id = item.getItemId();
+
+        if (id == R.id.home) {
+            //hand action
+        } else if (id == R.id.history) {
+            screen.setText("history clicked");
+            Intent history = new Intent(MainActivity.this, History.class);
+            startActivity(history);
+        } else if (id == R.id.notification) {
+            //handle notification action here
+        }
+        return false;
+    }
+
+
+
+
 
     @Override
     protected void onStop(){
@@ -237,4 +278,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+
 }

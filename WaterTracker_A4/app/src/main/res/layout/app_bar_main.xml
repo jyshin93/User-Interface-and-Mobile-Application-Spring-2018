@@ -1,0 +1,250 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/app_bar_main"
+    android:background="@color/blue_background"
+    tools:context="com.example.jinshin.watertracker.MainActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/app_bar"
+            layout="@layout/app_bar"></include>
+
+        <LinearLayout
+            android:id="@+id/cup_layout"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/mug_layout"
+            android:layout_marginRight="60dp"
+            android:layout_toLeftOf="@+id/mug_layout"
+            android:background="@drawable/layout_button"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/water_cup"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon" />
+
+            <TextView
+                android:id="@+id/cup_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="8 oz"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mug_layout"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="450dp"
+            android:background="@drawable/layout_button"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/mug"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/mug"
+                android:textAlignment="gravity"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/mug_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="12 oz"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottle_layout"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@+id/mug_layout"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="60dp"
+            android:layout_toRightOf="@+id/mug_layout"
+            android:background="@drawable/layout_button"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/bottle"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:paddingTop="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/bottle"
+                android:textAlignment="gravity" />
+
+            <TextView
+                android:id="@+id/bottle_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="17 oz"
+                android:textColor="@color/white"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@+id/app_bar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/screen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/lemon"
+                android:textAlignment="center"
+                android:textColor="@color/button_color"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignStart="@+id/mug_layout"
+            android:layout_below="@+id/linearLayout"
+            android:layout_marginEnd="13dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@id/bottle_layout"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/plus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/layout_button_round"
+                android:text="+"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="40dp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/input_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:fontFamily="@font/lemon"
+                    android:hint="Enter Amount"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/white"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/lemon"
+                    android:gravity="center_vertical"
+                    android:text="oz"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/minus"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/layout_button_round"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="40dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_toLeftOf="@+id/button_layout"-->
+        <!--android:layout_alignStart="@+id/cup_layout"-->
+        <!--android:layout_marginTop="150dp"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical"-->
+        <!--&gt;-->
+        <!--<ImageView-->
+        <!--android:layout_width="120dp"-->
+        <!--android:layout_height="200dp" />-->
+
+        <!--</LinearLayout>-->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/cup_layout"
+            android:layout_alignTop="@id/button_layout"
+            android:layout_toLeftOf="@+id/button_layout">
+
+            <me.itangqi.waveloadingview.WaveLoadingView
+                android:id="@+id/cup_image_layout_1"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="bottom"
+                app:wlv_shapeType="rectangle"
+                app:wlv_titleBottomColor="@color/white"
+
+                app:wlv_titleBottomStrokeColor="@color/colorPrimaryDark"
+                app:wlv_titleBottomStrokeWidth="3dp"
+                app:wlv_waveColor="@color/water"
+
+                />
+
+            <ImageView
+                android:id="@+id/cup_image_layout_2"
+                android:layout_width="wrap_content"
+                android:layout_height="203dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:src="@drawable/watercup_2"
+
+                ></ImageView>
+
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
