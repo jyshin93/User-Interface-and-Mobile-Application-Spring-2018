@@ -150,8 +150,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (id == R.id.history) {
             Intent history = new Intent(MainActivity.this, History.class);
             startActivity(history);
+            mDrawerLayout.closeDrawers();
         } else if (id == R.id.notification) {
-            //handle notification action here
+            Intent notification = new Intent(MainActivity.this, Notification.class);
+            startActivity(notification);
+            mDrawerLayout.closeDrawers();
         }
         return false;
     }

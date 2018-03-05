@@ -31,7 +31,7 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.history_main);
 
-        action_bar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        action_bar = (android.support.v7.widget.Toolbar) findViewById(R.id.history_bar);
         setSupportActionBar(action_bar);
 
         //initialize drawer here
@@ -89,7 +89,7 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.app_bar_menu, menu);
+        getMenuInflater().inflate(R.menu.history_bar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -101,6 +101,10 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
         int id = item.getItemId();
 
         if (id == R.id.settings) {
+            return true;
+        } else if (id == R.id.plus) {
+            Intent home = new Intent(History.this, MainActivity.class);
+            startActivity(home);
             return true;
         } else if (mToggle.onOptionsItemSelected(item)) {
             return true;
@@ -116,9 +120,13 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
         if (id == R.id.home) {
             Intent home = new Intent(History.this, MainActivity.class);
             startActivity(home);
+            mDrawerLayout.closeDrawers();
         } else if (id == R.id.history) {
 
         } else if (id == R.id.notification) {
+            Intent notification = new Intent(History.this, Notification.class);
+            startActivity(notification);
+            mDrawerLayout.closeDrawers();
         }
         return false;
     }
