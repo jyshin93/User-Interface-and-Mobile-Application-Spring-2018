@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     android.support.v7.widget.Toolbar action_bar;
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +135,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         if (id == R.id.settings) {
+            intent = new Intent(MainActivity.this, Setting.class);
+            startActivity(intent);
             return true;
         } else if (mToggle.onOptionsItemSelected(item)) {
             return true;
@@ -148,12 +152,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.home) {
             //hand action
         } else if (id == R.id.history) {
-            Intent history = new Intent(MainActivity.this, History.class);
-            startActivity(history);
+            intent = new Intent(MainActivity.this, History.class);
+            startActivity(intent);
             mDrawerLayout.closeDrawers();
         } else if (id == R.id.notification) {
-            Intent notification = new Intent(MainActivity.this, Notification.class);
-            startActivity(notification);
+            intent = new Intent(MainActivity.this, Notification.class);
+            startActivity(intent);
             mDrawerLayout.closeDrawers();
         }
         return false;

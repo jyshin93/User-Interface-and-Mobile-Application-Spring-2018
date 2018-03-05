@@ -25,6 +25,7 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     android.support.v7.widget.Toolbar action_bar;
+    Intent intent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,10 +102,12 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
         int id = item.getItemId();
 
         if (id == R.id.settings) {
+            intent = new Intent(History.this, Setting.class);
+            startActivity(intent);
             return true;
         } else if (id == R.id.plus) {
-            Intent home = new Intent(History.this, MainActivity.class);
-            startActivity(home);
+            intent = new Intent(History.this, MainActivity.class);
+            startActivity(intent);
             return true;
         } else if (mToggle.onOptionsItemSelected(item)) {
             return true;
@@ -118,14 +121,14 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            Intent home = new Intent(History.this, MainActivity.class);
-            startActivity(home);
+            intent = new Intent(History.this, MainActivity.class);
+            startActivity(intent);
             mDrawerLayout.closeDrawers();
         } else if (id == R.id.history) {
 
         } else if (id == R.id.notification) {
-            Intent notification = new Intent(History.this, Notification.class);
-            startActivity(notification);
+            intent = new Intent(History.this, Notification.class);
+            startActivity(intent);
             mDrawerLayout.closeDrawers();
         }
         return false;
