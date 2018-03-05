@@ -135,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.settings) {
             return true;
         } else if (mToggle.onOptionsItemSelected(item)) {
-            toast.makeText(MainActivity.this, "select hambuger!!!", toast.LENGTH_SHORT).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -144,13 +143,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        toast.makeText(MainActivity.this, "selected nav menu!!!", toast.LENGTH_SHORT).show();
         int id = item.getItemId();
 
         if (id == R.id.home) {
             //hand action
         } else if (id == R.id.history) {
-            screen.setText("history clicked");
             Intent history = new Intent(MainActivity.this, History.class);
             startActivity(history);
         } else if (id == R.id.notification) {
