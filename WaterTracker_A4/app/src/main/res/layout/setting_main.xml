@@ -23,17 +23,18 @@
         android:layout_marginStart="15dp"
         android:layout_toEndOf="@+id/textView2"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/amount" />
+        android:inputType="numberDecimal"
+        android:text="@string/amount"
+        />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="200dp"
+        android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_below="@+id/editText"
-        android:layout_marginTop="36dp"
-        android:layout_toStartOf="@+id/editText3"
+        android:layout_alignStart="@id/textView2"
         android:gravity="left|center"
+        android:layout_marginTop="30dp"
         android:text="@string/change_unit"
         android:textColor="@android:color/background_dark" />
 
@@ -54,11 +55,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editText"
+        android:layout_alignStart="@id/editText"
+        android:layout_marginTop="30dp"
         
         >
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/ounces"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/editText"
@@ -68,15 +71,13 @@
             android:text="@string/ounces" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/ml"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/radioButton"
             android:layout_below="@+id/radioButtonGroup"
             android:onClick="onRadioButtonClicked"
             android:text="@string/ml" />
-
-
     </RadioGroup>
 
     <Button
@@ -85,7 +86,50 @@
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/editText"
-        android:text="@string/ok" />
+        android:text="@string/ok"
+        android:background="@drawable/layout_button"/>
+
+    <TextView
+        android:id="@+id/time_setup"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@id/textView3"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="30dp"
+        android:gravity="left|center"
+        android:text="Daily Reset Time"
+        android:textColor="@android:color/background_dark" />
+    <EditText
+        android:id="@+id/resetText"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/time_setup"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/textView2"
+        android:ems="10"
+        android:inputType="datetime"
+        android:text="@string/amount"
+        />
+
+    <TextView
+        android:id="@+id/notification_text"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@id/textView3"
+        android:layout_below="@+id/time_setup"
+        android:layout_marginTop="30dp"
+        android:gravity="left|center"
+        android:text="Notification"
+        android:textColor="@android:color/background_dark" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/radioButtonGroup"
+        android:layout_below="@id/radioButtonGroup"
+        android:layout_alignTop="@id/notification_text"
+        android:background="@drawable/layout_button"/>
+
 
 
 </RelativeLayout>

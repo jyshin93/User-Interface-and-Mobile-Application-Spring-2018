@@ -19,11 +19,13 @@ public class Setting extends AppCompatActivity {
 
     int totalInt = 63;
     Button okbutton;
-    EditText totalEdit;
+    EditText totalEdit, timeEdit;
     String total;
     MainActivity mainActivity;
 
     android.support.v7.widget.Toolbar action_bar;
+
+    
     /*
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class Setting extends AppCompatActivity {
 
         okbutton = (Button)findViewById(R.id.button);
         totalEdit   = (EditText)findViewById(R.id.editText);
+        timeEdit   = (EditText)findViewById(R.id.resetText);
 
         mainActivity = new MainActivity();
 
