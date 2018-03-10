@@ -27,32 +27,12 @@
         android:text="@string/amount" />
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="41dp"
-        android:gravity="left|center"
-        android:text="@string/notification"
-        android:textColor="@android:color/background_dark" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_centerVertical="true"
-        android:gravity="left|center"
-        android:text="@string/change_unit"
-        android:textColor="@android:color/background_dark" />
-
-    <TextView
         android:id="@+id/textView3"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_alignTop="@+id/radioButton"
+        android:layout_below="@+id/editText"
+        android:layout_marginTop="36dp"
+        android:layout_toStartOf="@+id/editText3"
         android:gravity="left|center"
         android:text="@string/change_unit"
         android:textColor="@android:color/background_dark" />
@@ -69,22 +49,35 @@
         android:text="@string/change_targeted_amount"
         android:textColor="@android:color/background_dark" />
 
-    <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_below="@+id/editText"
-        android:layout_marginTop="34dp"
-        android:layout_toEndOf="@+id/textView"
-        android:text="@string/ounces" />
+    <RadioGroup
+        android:id="@+id/radioButtonGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText"
+        
+        >
 
-    <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_below="@+id/radioButton"
-        android:layout_toEndOf="@+id/textView"
-        android:text="@string/ml" />
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editText"
+            android:layout_alignTop="@+id/textView3"
+            android:layout_below="@id/radioButtonGroup"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/ounces" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/radioButton"
+            android:layout_below="@+id/radioButtonGroup"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/ml" />
+
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/button"
@@ -93,32 +86,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/editText"
         android:text="@string/ok" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignStart="@+id/editText"
-        android:layout_alignTop="@+id/textView4"
-        android:ems="10"
-        android:inputType="time" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/editText3"
-        android:text="@string/ok" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignBaseline="@+id/textView"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignParentEnd="true"
-        android:text="ToggleButton" />
 
 
 </RelativeLayout>

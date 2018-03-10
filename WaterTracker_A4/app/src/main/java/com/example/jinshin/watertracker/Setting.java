@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.view.View;
 import android.util.Log;
+import android.widget.RadioButton;
 
 /**
  * Created by jinshin on 05/03/2018.
@@ -16,10 +17,11 @@ import android.util.Log;
 
 public class Setting extends AppCompatActivity {
 
-    int totalInt = 64;
+    int totalInt = 63;
     Button okbutton;
     EditText totalEdit;
-
+    String total;
+    MainActivity mainActivity;
 
     android.support.v7.widget.Toolbar action_bar;
     /*
@@ -42,15 +44,40 @@ public class Setting extends AppCompatActivity {
         okbutton = (Button)findViewById(R.id.button);
         totalEdit   = (EditText)findViewById(R.id.editText);
 
+        mainActivity = new MainActivity();
+
         okbutton.setOnClickListener(
                 new View.OnClickListener()
                 {
                     public void onClick(View view)
                     {
+                        total = totalEdit.getText().toString();
+                        totalInt = Integer.parseInt(total);
+                        mainActivity.setTotal(totalInt);
                         Log.v("EditText", totalEdit.getText().toString());
                     }
-                });
+                }
+        );
+
     }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radioButton:
+                if (checked)
+                    //ounces
+                    break;
+            case R.id.radioButton2:
+                if (checked)
+                    //ml
+                    break;
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

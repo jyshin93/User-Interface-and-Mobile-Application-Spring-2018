@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Animation alpha;
     public static final String PREFS_NAME = "MyPrefsFile";
     float amount;
-
+    int totalInt;
 
     Setting setting;
 
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        totalInt = 40;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.cup_layout:
                 v.startAnimation(alpha);
@@ -220,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         screen.setText("You drank " + amount + "/" + setting.getTotal() +" oz of water today!");
                         fillup();
                     } else {
-                        screen.setText("You drank " + amount + "/" + setting.getTotal() + " oz of water today!");
+                        screen.setText("You drank " + amount + "/" + totalInt + " oz of water today!");
                         toast.makeText(MainActivity.this, "Added " + temp + " now", toast.LENGTH_SHORT).show();
                         input_text.setText("");
                         //change bottle image
@@ -289,6 +288,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             wave.setTopTitle("");
         }
 
+    }
+    public void setTotal(int total) {
+        this.totalInt = total;
     }
 
 
