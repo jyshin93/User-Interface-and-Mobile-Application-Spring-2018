@@ -19,13 +19,12 @@
         android:id="@+id/editText"
         android:layout_width="100dp"
         android:layout_height="50dp"
+        android:layout_alignStart="@+id/resetText"
         android:layout_alignTop="@+id/textView2"
-        android:layout_marginStart="15dp"
-        android:layout_toEndOf="@+id/textView2"
+        android:imeOptions="actionDone"
         android:ems="10"
         android:inputType="numberDecimal"
-        android:text="@string/amount"
-        />
+         />
 
     <TextView
         android:id="@+id/textView3"
@@ -80,15 +79,6 @@
             android:text="@string/ml" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/editText"
-        android:text="@string/ok"
-        android:background="@drawable/layout_button"/>
-
     <TextView
         android:id="@+id/time_setup"
         android:layout_width="170dp"
@@ -99,6 +89,7 @@
         android:gravity="left|center"
         android:text="Daily Reset Time"
         android:textColor="@android:color/background_dark" />
+
     <EditText
         android:id="@+id/resetText"
         android:layout_width="100dp"
@@ -107,8 +98,8 @@
         android:layout_marginStart="15dp"
         android:layout_toEndOf="@+id/textView2"
         android:ems="10"
+        android:imeOptions="actionDone"
         android:inputType="datetime"
-        android:text="@string/amount"
         />
 
     <TextView
@@ -128,7 +119,7 @@
         android:layout_alignStart="@id/radioButtonGroup"
         android:layout_below="@id/radioButtonGroup"
         android:layout_alignTop="@id/notification_text"
-        android:background="@drawable/layout_button"/>
+        />
 
 
 
