@@ -34,6 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Animation alpha;
     public static final String PREFS_NAME = "MyPrefsFile";
     float amount;
+
+
+    Setting setting;
+
+
+
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     LinearLayout mug, cup, bottle;
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         screen = (TextView) findViewById(R.id.screen);
-        screen.setText("You drank " + amount + "/64 oz of water today!");
+        screen.setText("You drank " + amount + "/64" +" oz of water today!");
 
         cup = (LinearLayout) findViewById(R.id.cup_layout);
         cup.setOnClickListener(this);
@@ -108,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fillup();
 
         input_text = (EditText) findViewById(R.id.input_text);
+        setting = new Setting();
 
     }
 
@@ -209,10 +217,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     amount += temp;
                     if (amount > 64) {
                         toast.makeText(MainActivity.this, "You have completed goal today!!!", toast.LENGTH_SHORT).show();
-                        screen.setText("You drank " + amount + "/64 oz of water today!");
+                        screen.setText("You drank " + amount + "/" + setting.getTotal() +" oz of water today!");
                         fillup();
                     } else {
-                        screen.setText("You drank " + amount + "/64 oz of water today!");
+                        screen.setText("You drank " + amount + "/" + setting.getTotal() + " oz of water today!");
                         toast.makeText(MainActivity.this, "Added " + temp + " now", toast.LENGTH_SHORT).show();
                         input_text.setText("");
                         //change bottle image
@@ -234,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         input_text.setText("");
                     }else {
                         amount -= temp;
-                        screen.setText("You drank " + amount + "/64 oz of water today!");
+                        screen.setText("You drank " + amount + "/" + setting.getTotal() + " oz of water today!");
                         toast.makeText(MainActivity.this, "Deducted " + temp + " now", toast.LENGTH_SHORT).show();
                         input_text.setText("");
                         fillup();

@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.Button;
+import android.view.View;
+import android.util.Log;
 
 /**
  * Created by jinshin on 05/03/2018.
@@ -12,17 +16,40 @@ import android.view.MenuItem;
 
 public class Setting extends AppCompatActivity {
 
-    android.support.v7.widget.Toolbar action_bar;
+    int totalInt = 64;
+    Button okbutton;
+    EditText totalEdit;
 
+
+    android.support.v7.widget.Toolbar action_bar;
+    /*
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting_main);
         action_bar = (android.support.v7.widget.Toolbar) findViewById(R.id.setting_bar);
         setSupportActionBar(action_bar);
+    }
+*/
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.setting_main);
+        action_bar = (android.support.v7.widget.Toolbar) findViewById(R.id.setting_bar);
+        setSupportActionBar(action_bar);
 
+        okbutton = (Button)findViewById(R.id.button);
+        totalEdit   = (EditText)findViewById(R.id.editText);
 
-
+        okbutton.setOnClickListener(
+                new View.OnClickListener()
+                {
+                    public void onClick(View view)
+                    {
+                        Log.v("EditText", totalEdit.getText().toString());
+                    }
+                });
     }
 
     @Override
@@ -43,5 +70,9 @@ public class Setting extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public int getTotal() {
+        return totalInt;
     }
 }
