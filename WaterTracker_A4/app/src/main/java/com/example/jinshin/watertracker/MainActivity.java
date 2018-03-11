@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.time.LocalDateTime;
 
 import me.itangqi.waveloadingview.WaveLoadingView;
 
@@ -34,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Animation alpha;
     public static final String PREFS_NAME = "MyPrefsFile";
     float amount, goal_amount;
-    int totalInt;
+    int end_time;
 
     Setting setting;
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -78,22 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navigationView.setNavigationItemSelectedListener(this);
 
         settings = getSharedPreferences(PREFS_NAME, 0);
-
-        //receive amount based on current date
-        open_date = getDate();
-        amount = settings.getFloat(open_date, 0);
-        goal_amount = settings.getFloat("Goal", 64);
-        base_measurement = settings.getString("Measure", "oz");
-
-        //setup animation
-        alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
-
-        //setup Toast
-        toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
-
         screen = (TextView) findViewById(R.id.screen);
-        screen.setText("You drank " + amount + "/" + goal_amount +" " + base_measurement + " of water today!");
+        alpha = AnimationUtils.loadAnimation(this, R.anim.alpha);
 
         cup = (LinearLayout) findViewById(R.id.cup_layout);
         cup.setOnClickListener(this);
@@ -111,14 +102,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mug_text = (TextView) findViewById(R.id.mug_text);
         bottle_text = (TextView) findViewById(R.id.bottle_text);
         measure_view = (TextView) findViewById(R.id.measure_view);
-        initialize_amount(base_measurement);
 
         //call image layout
         cup_image_layout_2 = (ImageView) findViewById(R.id.cup_image_layout_2);
         wave = (WaveLoadingView) findViewById(R.id.cup_image_layout_1);
+
+        toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.TOP | Gravity.LEFT, 0, 0);
+        input_text = (EditText) findViewById(R.id.input_text);
+
+        //receive amount based on current date
+        open_date = getDate();
+//        end_time = settings.getInt("End_Time", 24);
+//        try {
+//            amount = get_amount(open_date, end_time);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        goal_amount = settings.getFloat("Goal", 64);
+//        base_measurement = settings.getString("Measure", "oz");
+        this.onResume();
+
+        //setup animation
+
+
+        //setup Toast
+
+
         fillup();
 
-        input_text = (EditText) findViewById(R.id.input_text);
+
 
     }
 
@@ -161,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            //hand action
+            mDrawerLayout.closeDrawers();
         } else if (id == R.id.history) {
             intent = new Intent(MainActivity.this, History.class);
             startActivity(intent);
@@ -174,51 +187,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         goal_amount = settings.getFloat("Goal", goal_amount);
-        String prev_measurement = base_measurement;
-        base_measurement = settings.getString("Measure", base_measurement);
+        end_time = settings.getInt("End_Time", 0);
+        String prev_measurement = settings.getString("Prev_Measure", "oz");
+        try {
+            amount = get_amount(open_date, end_time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        base_measurement = settings.getString("Measure", "oz");
         if (!prev_measurement.equals(base_measurement)) {
             if (base_measurement.equals("oz")) {
                 //convert amount from milli to oz
                 amount = (float) ((int) (amount / 30));
+                try {
+                    save_amount(open_date, end_time);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 //convert button amounts
-                convert_amounts(base_measurement);
+                initialize_amount(base_measurement);
             } else {
                 //convert amount from oz to milli
                 amount = (float) ((int) (amount * 30));
+                try {
+                    save_amount(open_date, end_time);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 //convert button amounts
-                convert_amounts(base_measurement);
+                initialize_amount(base_measurement);
             }
+        } else {
+            initialize_amount(base_measurement);
         }
+//        Log.e("amount", amount + "");
         screen.setText(String.format("You drank %.1f/%.1f %s of water today!", amount, goal_amount, base_measurement));
         measure_view.setText(base_measurement);
+        editor = settings.edit();
+        editor.putString("Prev_Measure", base_measurement);
+        editor.commit();
         fillup();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        editor = settings.edit();
-        editor.putFloat("Goal", goal_amount);
-        editor.commit();
+        try {
+            this.save_amount(open_date, end_time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void onStop(){
         super.onStop();
 
-        // We need an Editor object to make preference changes.
-        // All objects are from android.context.Context
-        if (open_date.equals(getDate())) {
-            editor = settings.edit();
-            editor.putFloat(open_date, amount);
-
-            // Commit the edits!
-            editor.commit();
+        try {
+            this.save_amount(open_date, end_time);
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
@@ -249,11 +281,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (amount > 64) {
                         toast.makeText(MainActivity.this, "You have completed goal today!!!", toast.LENGTH_SHORT).show();
                         screen.setText(String.format("You drank %.1f/%.1f %s of water today!", amount, goal_amount, base_measurement));
+                        input_text.setText("");
+                        try {
+                            this.save_amount(open_date, end_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         fillup();
                     } else {
                         screen.setText(String.format("You drank %.1f/%.1f %s of water today!", amount, goal_amount, base_measurement));
                         toast.makeText(MainActivity.this, "Added " + temp + " now", toast.LENGTH_SHORT).show();
                         input_text.setText("");
+                        try {
+                            this.save_amount(open_date, end_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         //change bottle image
                         fillup();
                     }
@@ -276,6 +319,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         screen.setText(String.format("You drank %.1f/%.1f %s of water today!", amount, goal_amount, base_measurement));
                         toast.makeText(MainActivity.this, "Deducted " + temp + " now", toast.LENGTH_SHORT).show();
                         input_text.setText("");
+                        try {
+                            this.save_amount(open_date, end_time);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         fillup();
                     }
 
@@ -322,26 +370,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    public void convert_amounts(String measure) {
-        if (measure.equals("oz")) {
-            //from milli to oz
-            cup_amount = (int) (cup_amount / 30.0);
-            mug_amount = (int) (mug_amount / 30.0);
-            bottle_amount = (int) (bottle_amount / 30.0);;
-            cup_text.setText(String.format("%d %s", cup_amount, measure));
-            mug_text.setText(String.format("%d %s", mug_amount, measure));
-            bottle_text.setText(String.format("%d %s", bottle_amount, measure));
-        } else {
-            //from oz to milli
-            cup_amount *= 30;
-            mug_amount *= 30;
-            bottle_amount *= 30;
-            cup_text.setText(String.format("%d %s", cup_amount, measure));
-            mug_text.setText(String.format("%d %s", mug_amount, measure));
-            bottle_text.setText(String.format("%d %s", bottle_amount, measure));
-        }
-    }
-
     public void initialize_amount(String measure) {
         if (measure.equals("oz")) {
             cup_amount = 8;
@@ -357,6 +385,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             cup_text.setText(String.format("%d %s", cup_amount, measure));
             mug_text.setText(String.format("%d %s", mug_amount, measure));
             bottle_text.setText(String.format("%d %s", bottle_amount, measure));
+        }
+    }
+
+    public float get_amount(String open_date, int end_time) throws ParseException {
+        Calendar now = Calendar.getInstance();
+        int cur_hour = now.get(Calendar.HOUR_OF_DAY);
+        if (cur_hour < end_time) {
+            return settings.getFloat(open_date, 0);
+        } else {
+            Date cur_date = df.parse(open_date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(cur_date);
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            String next_date = df.format(date = calendar.getTime());
+            return settings.getFloat(next_date, 0);
+        }
+    }
+
+    public void save_amount(String open_date, int end_time) throws ParseException {
+        Calendar now = Calendar.getInstance();
+        int cur_hour = now.get(Calendar.HOUR_OF_DAY);
+        if (cur_hour < end_time) {
+            editor = settings.edit();
+            editor.putFloat(open_date, amount);
+            editor.commit();
+        } else {
+            Date cur_date = df.parse(open_date);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(cur_date);
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
+            String next_date = df.format(date = calendar.getTime());
+            editor = settings.edit();
+            editor.putFloat(next_date, amount);
+            editor.commit();
         }
     }
 

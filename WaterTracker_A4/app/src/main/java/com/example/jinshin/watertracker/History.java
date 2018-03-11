@@ -125,7 +125,7 @@ public class History extends AppCompatActivity implements DailyTotal.OnFragmentI
             startActivity(intent);
             mDrawerLayout.closeDrawers();
         } else if (id == R.id.history) {
-
+            mDrawerLayout.closeDrawers();
         } else if (id == R.id.notification) {
             intent = new Intent(History.this, Notification.class);
             startActivity(intent);

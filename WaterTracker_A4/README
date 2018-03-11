@@ -1,0 +1,39 @@
+Assignment 4: Water Tracker Part II
+
+Date: 3/10/18
+
+Name: Jin Young Shin
+      Matthew Kim
+
+JHED: jshin44
+      mkim175
+
+Email:jshin44@jhu.edu
+      mkim175@jhu.edu
+
+-----------------------------------------------------------------
+
+   For our second Water Tracker implementation, we first used Jin's code base
+from the first implementation to start. We then added the necessary additional
+features, such as the navigation drawer, history, notification details, and
+settings. We used Shared Preferences to share data across the different
+activities(for example, from Settings to MainActivity).
+   The conversion from oz -> ml is 1 -> 29.5735, but for the sake of simplicity and ease for our
+users, we rounded 29.5735 to 30, so 1oz -> 30ml. When the user changes
+units, we also implemented features such that the number for which the unit is changing for,
+also becomes converted. For example, if the user drank 2oz of water, and the user
+wants to change units to ml, MainActivity will show both a change in units, and a change
+in the amount(2oz -> 30ml).
+   When specifying the ending time of day in settings, the user chooses an hour (military time)
+for the end of a day. Now, total intake of water resets to 0 when reaching that time,
+and the previous intake is recorded in the previous day. By default, hour reset is 24, which is midnight.
+As a result, when the date changes, there is a reset(amount = 0). Whenever user chooses a time less than
+24 with custom end-time, we store value of intake in the current date, and if the current time is larger
+than end-time, we store the intake value in the next day.
+   We have also added toasts, so whenever the user does an activity,
+they get a notification that they completed said action as a means
+of verification.
+   In settings, to set goal and end time, users need to press enter button in given keyboard to save the values. If not, then values will not be adjusted.
+
+
+-----------------------------------------------------------------
